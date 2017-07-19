@@ -1,25 +1,38 @@
 package com.pg.controllers;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pg.domain.Category;
 
 @RestController
 public class CategoryController {
-	//http://localhost:8080/getAllCategories
-	@RequestMapping("/getAllCategories")
-	public List<Category> getCategories(){
-		List<Category> categoriesList = new ArrayList<Category>();
-		Category category = new Category();
-		category.setCategoryType("Tupe1");
-		category.setDescription("This is category 1");
-		category.setPrice(100.25);
-		categoriesList.add(category);
-		return categoriesList;
+	@Autowired
+	private CategoryService categoryservice;
+	@RequestMapping("/categories")
+	public List<Category> getAllCategories(){
+		return categoryservice.getAllCategories();
 	}
-
+	@RequestMapping("/categories/{categorytype}")
+	public Category getCategory(@PathVariable String categorytype){
+		return CategoryService.getcategory(categorytype);
+		
+	}
+     @RequestMapping(value="/categories", method=RequestMethod.POST)
+    public void addCategory(@RequestBody Category category) {
+    	CategoryService.addcategories(category);
+    	}
+     @RequestMapping(value="/categories/{categorytype}", method=RequestMethod.PUT)
+     public void updateCategory(@RequestBody Category category,@PathVariable String categorytype) {
+     	CategoryService.updatecategories(categorytype,category);
+     	}
+     
+     
 }

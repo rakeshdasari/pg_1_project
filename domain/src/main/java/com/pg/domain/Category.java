@@ -6,6 +6,17 @@ public class Category {
 	private double price;
 	private String description;
 
+	public Category(String categoryType, double price, String description) {
+		super();
+		this.categoryType = categoryType;
+		this.price = price;
+		this.description = description;
+	}
+
+	public Category() {
+		super();
+	}
+
 	public String getCategoryType() {
 		return categoryType;
 	}
